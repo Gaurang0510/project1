@@ -1,0 +1,42 @@
+The code is a simple Java GUI-based application that allows users to log in with a username and password, save the credentials to a MySQL database, and then use a Monoalphabetic Cipher to encrypt and decrypt text. Here's an explanation of the key parts:
+
+1. LoginFrame Class
+This class represents the login window where users can input their credentials (username and password). Once the user clicks the "Login" button, the following happens:
+
+The username and password are captured.
+A connection to a MySQL database (csdb) is established using DriverManager.getConnection().
+The user credentials are inserted into the user table of the database using a PreparedStatement to avoid SQL injection.
+After successful login, it opens the MonoalphabeticCipherGUI window, which allows the user to encrypt and decrypt text.
+Main Components:
+
+JLabel for labels (Username, Password, etc.).
+JTextField for text input (username, encrypted text).
+JPasswordField for password input.
+JButton for triggering actions (Login).
+Background image is set as the background for the login frame.
+Database connection using MySQL to store credentials.
+2. MonoalphabeticCipherGUI Class
+This class provides the GUI for the Monoalphabetic Cipher encryption and decryption functionality. The Monoalphabetic Cipher is a substitution cipher where each letter of the alphabet is mapped to a corresponding letter from a random key. The user can input a string, then encrypt or decrypt it using this cipher.
+
+Main Components:
+
+Input and Output Fields: JTextField for entering the text to be encrypted or decrypted and displaying the result.
+Buttons: Encrypt and Decrypt buttons that trigger the encryption and decryption processes.
+Maps: encryptionMap and decryptionMap store the mappings for encryption and decryption based on the Monoalphabetic Cipher.
+encryptionMap maps the original alphabet (A-Z) to a scrambled key (QWERTYUIOPLKJHGFDSAZXCVBNM in this case).
+decryptionMap maps the scrambled key back to the original alphabet.
+Detailed Functionality:
+Encrypt Method: Converts each character of the input text to the corresponding character from the encryptionMap. Non-alphabetical characters (such as spaces or punctuation) are left unchanged.
+Decrypt Method: Converts each character of the input text back to the original character using the decryptionMap.
+Event Listeners: The Encrypt and Decrypt buttons are linked to the encryption and decryption methods using ActionListener. When a user clicks either button, the respective operation is performed.
+Key Points:
+Cipher Maps: The initializeCipherMaps() method sets up the mapping between the original alphabet and the key. For example, 'A' might map to 'Q', 'B' to 'W', etc.
+Encrypt/Decrypt Process: The encryption and decryption methods work by looking up each character in the corresponding map and replacing it accordingly.
+GUI Layout: The layout is managed manually (not using any layout manager) with the setBounds() method for positioning components. The background image is also set manually.
+Flow:
+The program starts with the LoginFrame where users input their username and password.
+Once they log in, a new window (MonoalphabeticCipherGUI) opens, allowing them to input text for encryption or decryption.
+When the user clicks "Encrypt" or "Decrypt", the respective process is triggered, and the result is displayed in the output field.
+Notes:
+The database connection part in the LoginFrame class seems to be saving login details to the database, but this might be for testing purposes or an incomplete feature. You can expand this to check for valid user credentials (instead of just inserting them) before allowing access to the cipher window.
+The initializeCipherMaps() function uses a static cipher key. In a more advanced version, you could allow the user to provide their own key or make the key random for each session.
